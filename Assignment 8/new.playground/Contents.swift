@@ -63,8 +63,7 @@ class Person {
 final class Actor: Person {
     var actedFilms: [Film]
     
-    
-    init(name: String, birthYear: Int, actedFilms: [Film] = [] ) {
+    init(name: String, birthYear: Int, actedFilms: [Film] = []) {
         self.actedFilms = actedFilms
         super.init(name: name, birthYear: birthYear)
     }
@@ -221,20 +220,14 @@ class SuperHero {
 
 //MARK: 10. შექმენით Enum PowerLevel, რომელიც მოიცავს შემდეგ დონეებს: weak, average, strong, super და დაამატეთ აღწერის მეთოდი რომელიც დააბრუნებს level-ს ტექსტური ფორმით.
 
-enum PowerLevel {
-    case weak, average, strong, `super`
+enum PowerLevel: String {
+    case weak = "weak"
+    case average = "average"
+    case strong = "strong"
+    case `super` = "super"
     
-    func description()  {
-        switch self {
-        case .weak:
-            "weak"
-        case .average:
-            "average"
-        case .strong:
-            "strong"
-        case .`super`:
-            "super"
-        }
+    func description() {
+        print("hero is\(PowerLevel.RawValue.self)")
     }
 }
 
@@ -248,6 +241,7 @@ let captainAmerica = SuperHero(name: "Steve Rogers", superPower: "Fighting", lev
 let ironMan = SuperHero(name: "Tony Stark", superPower: "Genious", level: .strong)
 
 captainAmerica.addAlly(ironMan)
+
 
 
 // 11 examples
