@@ -102,10 +102,11 @@ for product in sortedByPrice {
 
 //MARK: 7. რენდომ (1)კატეგორიის ყველა პროდუქტის სტატუსი შეცვალეთ ხელმისაწვდომიდან გაყიდულზე.
 
+let categories: [FoodGroup] = [.vegetable, .fruit, .dairy, .grain]
 
 products = products.map { product in
     var newProduct = product
-    if newProduct.category == .vegetable {
+    if newProduct.category == categories.randomElement() {
         newProduct.status = .sold
         print("\(newProduct.name) არის \(newProduct.status)")
     }
