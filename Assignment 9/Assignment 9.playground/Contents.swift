@@ -198,11 +198,6 @@ NationalLibrary.addBook(book6)
 //printing list of books
 NationalLibrary.listBooks()
 
-//second option
-//for book in NationalLibrary.books {
-//    print("\(book.title)")
-//}
-
 let newLibrary = Library(name: "New library", books: books)
 
 newLibrary.removeBookWith(title: "Steve Jobs")
@@ -222,11 +217,11 @@ for recent in booksSince2000 {
 //exercise 4 example
 
 let georgianLibrary = Library(name: "Georgian library", books: books)
-//let recentBooks = georgianLibrary.filterBooks { $0.publicationYear > 1996 }
 
+let filterForThisYear = 1996
 var filterdBooks = georgianLibrary.filterBooks { filteredBook in
     return filteredBook.filter { book in
-        book.publicationYear > 1996
+        book.publicationYear > filterForThisYear
     }
 }
 print("Books published after 1996:")
