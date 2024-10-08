@@ -9,25 +9,25 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var remainderCalculation = true
-    var isThemeButtonPressed = false
+    private var remainderCalculation = true
+    private var isThemeButtonPressed = false
     
-    @IBOutlet weak var numberToDivide: UITextField?
-    @IBOutlet weak var dividerNumber: UITextField?
-    @IBOutlet weak var titleLabel: UILabel?
-    @IBOutlet weak var resultLabel: UILabel!
-    @IBOutlet weak var themeButton: UIButton!
+    @IBOutlet private weak var numberToDivide: UITextField?
+    @IBOutlet private weak var dividerNumber: UITextField?
+    @IBOutlet private weak var titleLabel: UILabel?
+    @IBOutlet private weak var resultLabel: UILabel!
+    @IBOutlet private weak var themeButton: UIButton!
     
     
-    @IBAction func calculateButton(_ sender: UIButton) {
+    @IBAction private func calculateButton(_ sender: UIButton) {
         calculate()
     }
     
-    @IBAction func changeThemeButton(_ sender: UIButton) {
+    @IBAction private func changeThemeButton(_ sender: UIButton) {
         changeTheme()
     }
     
-    @IBAction func switcher(_ sender: UISwitch) {
+    @IBAction private func switcher(_ sender: UISwitch) {
         remainderCalculation = sender.isOn ? true : false
         titleLabel?.text = sender.isOn ? "ნაშთიანი გაყოფა" : "უნაშთო გაყოფა"
     }
@@ -37,21 +37,21 @@ class ViewController: UIViewController {
         setupUI()
     }
     
-    func setupUI() {
+    private func setupUI() {
         showTitleLabel()
     }
     
-    func showTitleLabel() {
+    private func showTitleLabel() {
         titleLabel?.text = "ნაშთიანი გაყოფა"
     }
     
-    func changeTheme() {
+    private func changeTheme() {
         isThemeButtonPressed.toggle()
         view.overrideUserInterfaceStyle = isThemeButtonPressed ? .dark : .light
         themeButton.setTitle(isThemeButtonPressed ? "Light" : "Dark", for: .normal)
     }
     
-    func calculate() {
+    private func calculate() {
         if let number1 = numberToDivide?.text , let number2 = dividerNumber?.text {
             let firstNumber = Int(number1) ?? 0
             let secondNumber = Int(number2) ?? 0
