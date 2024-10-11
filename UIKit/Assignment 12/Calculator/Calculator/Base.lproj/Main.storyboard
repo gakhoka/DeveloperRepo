@@ -252,7 +252,7 @@
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="=" cornerStyle="medium">
                                                                     <backgroundConfiguration key="background">
-                                                                        <color key="backgroundColor" systemColor="systemPinkColor"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </backgroundConfiguration>
                                                                     <fontDescription key="titleFontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
                                                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
@@ -335,6 +335,7 @@
                         <outlet property="colorThemeButton" destination="7Vl-SZ-Nmv" id="UVg-NX-8GI"/>
                         <outlet property="numbersView" destination="bfk-kk-D5T" id="vnU-mD-4ey"/>
                         <outlet property="remainderButton" destination="dcy-fq-mnR" id="7Yb-ei-1Dg"/>
+                        <outlet property="resultButton" destination="mn8-44-RJ6" id="khX-Ir-3VW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
