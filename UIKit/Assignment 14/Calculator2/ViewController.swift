@@ -29,6 +29,9 @@ class ViewController: UIViewController {
     private var nestedStack1 = UIStackView()
     private var largeDeviceSpacing = false
     private var isColorThemButtonTapped = false
+    private var deviceSpacing: CGFloat {
+        largeDeviceSpacing ? 28 : 10
+    }
     
     
     override func viewDidLoad() {
@@ -140,7 +143,6 @@ class ViewController: UIViewController {
             stackViewLeftConstraint.constant = 20
             stackViewRightConstraint.constant = -20
         } else {
-            
             if screenHeight <= 667 {
                 stackViewTopConstraint.constant = 30
                 stackViewBottomConstraint.constant = -30
@@ -241,11 +243,11 @@ class ViewController: UIViewController {
     }
     
     private func adjustStackViewSpacingByDeviceSize() {
-        verticalStackView1.spacing = largeDeviceSpacing ? 28 : 10
-        verticalStackView2.spacing = largeDeviceSpacing ? 28 : 10
-        verticalStackView3.spacing = largeDeviceSpacing ? 28 : 10
-        verticalStackView4.spacing = largeDeviceSpacing ? 28 : 10
-        nestedStack1.spacing = largeDeviceSpacing ? 28 : 10
+        verticalStackView1.spacing = deviceSpacing
+        verticalStackView2.spacing = deviceSpacing
+        verticalStackView3.spacing = deviceSpacing
+        verticalStackView4.spacing = deviceSpacing
+        nestedStack1.spacing = deviceSpacing
     }
     
     private func applyGradient() {
