@@ -255,6 +255,16 @@ class ViewController: UIViewController {
                 calculationHistory.append(history)
             }
         }
+        resetCalculator()
+    }
+    
+    private func resetCalculator() {
+        firstInput = ""
+        secondInput = ""
+        currentOperation = nil
+        decimalNumber = false
+        finishedCalculating = false
+        updateCalculationLabel()
     }
     
     private func changeTheme() {
