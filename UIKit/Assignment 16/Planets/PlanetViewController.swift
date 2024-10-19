@@ -8,8 +8,8 @@
 import UIKit
 import SwiftUI
 
-class PlanetViewController: UIViewController {
-    
+class PlanetViewController: UIViewController, PlanetDetailViewControllerDelegate {
+
     private var titleLabel = UILabel()
     private let tableView = UITableView()
     
@@ -28,8 +28,30 @@ class PlanetViewController: UIViewController {
     private func setupUI() {
         tableViewSetup()
         titleLabelSetup()
+        sortPlanets()
     }
     
+    func favoritedPlanet(_ planet: Planet) {
+        if let index = planets.firstIndex(where: { $0.name == planet.name }) {
+            planets[index] = planet
+            sortPlanets()
+            tableView.reloadData()
+        }
+    }
+    
+    func favoriteTapped(for planet: Planet) {
+        if let index = planets.firstIndex(where: { $0.isFavorite == planet.isFavorite }) {
+            planets[index] = planet
+            sortPlanets()
+            tableView.reloadData()
+        }
+    }
+    
+    private func sortPlanets() {
+        planets.sort { $0.isFavorite && !$1.isFavorite }
+        tableView.reloadData()
+    }
+
     private func titleLabelSetup() {
         view.addSubview(titleLabel)
         titleLabel.textColor = .titleLabelColor
@@ -63,33 +85,15 @@ class PlanetViewController: UIViewController {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 struct viewControllerRepresentable: UIViewControllerRepresentable {
     
     typealias UIViewControllerType = PlanetViewController
-    
     
     func makeUIViewController(context: Context) -> PlanetViewController {
         PlanetViewController()
     }
     
     func updateUIViewController(_ uiViewController: PlanetViewController, context: Context) {
-        
     }
 }
 

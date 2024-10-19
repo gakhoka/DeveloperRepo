@@ -10,16 +10,12 @@ import UIKit
 
 
 extension PlanetViewController: UITableViewDataSource, UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedPlanet = planets[indexPath.row]
         let planetVC = PlanetDetailViewController()
-       
-        planetVC.planetName = selectedPlanet.name
-        planetVC.planetArea = "\(selectedPlanet.area.toDecimalString() ?? "") km2"
-        planetVC.planetTemp = "\(selectedPlanet.temperature) ℃"
-        planetVC.planetMass = "\(selectedPlanet.mass) kg"
-        planetVC.isFavorite = selectedPlanet.isFavorite 
+        planetVC.configureView(with: selectedPlanet)
+        planetVC.delegate = self
         navigationController?.pushViewController(planetVC, animated: true)
     }
 
@@ -31,15 +27,9 @@ extension PlanetViewController: UITableViewDataSource, UITableViewDelegate {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PlanetCell", for: indexPath) as? PlanetTableViewCell {
             let planet = planets[indexPath.row]
-            cell.planetName.text = planet.name
-            cell.planetArea.text = "\(planet.area.toDecimalString() ?? "") km2"
-            cell.planetImage.image = UIImage(named: planet.name)
+            cell.configureCell(planet: planet)
             cell.backgroundColor = .hexColor
-            let disclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
-            disclosureIndicator.tintColor = UIColor.titleLabelColor
-            disclosureIndicator.frame = CGRect(x: 0, y: 0, width: 18, height: 18)
-            cell.accessoryView = disclosureIndicator
-            cell.isFavorite = planet.isFavorite
+            cell.planet = planet
             return cell
         }
         return UITableViewCell()

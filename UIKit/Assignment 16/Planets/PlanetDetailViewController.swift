@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol PlanetDetailViewControllerDelegate: AnyObject {
+    func favoritedPlanet(_ planet: Planet)
+}
+
 class PlanetDetailViewController: UIViewController {
+    
+    var planet: Planet?
+    weak var delegate: PlanetDetailViewControllerDelegate?
     
     private var nameLabel = UILabel()
     private var planetImageView = UIImageView()
@@ -19,6 +26,7 @@ class PlanetDetailViewController: UIViewController {
     private var firstStack = UIStackView()
     private var secondStack = UIStackView()
     private var thirdStack = UIStackView()
+    private var isSmallDevice = false
     
     var isFavorite = false
     var planetName: String?
@@ -44,6 +52,14 @@ class PlanetDetailViewController: UIViewController {
         buttonConfig()
     }
     
+    func configureView(with planet: Planet) {
+        planetArea = "\(planet.area.toDecimalString() ?? "") km2"
+        planetTemp = "\(planet.temperature) ℃"
+        planetMass = "\(planet.mass) kg"
+        planetName = planet.name
+        self.planet = planet
+    }
+    
     private func navigationButtonConfig() {
         view.addSubview(navigationButton)
         navigationButton.translatesAutoresizingMaskIntoConstraints = false
@@ -59,7 +75,7 @@ class PlanetDetailViewController: UIViewController {
     private func buttonConfig() {
         view.addSubview(starButton)
         starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-        starButton.tintColor = isFavorite ? .yellow : .gray
+        starButton.tintColor = planet?.isFavorite == true ? .yellow : .gray
         starButton.addAction(UIAction(handler: { [weak self] action in
             self?.starButtonAction()
         }), for: .touchUpInside)
@@ -67,9 +83,12 @@ class PlanetDetailViewController: UIViewController {
     }
     
     private func starButtonAction() {
-        isFavorite.toggle()
-        isFavoritButtonTapped = isFavorite
-        starButton.tintColor = isFavoritButtonTapped ? .yellow : .gray
+        planet?.isFavorite.toggle()
+        starButton.tintColor = planet?.isFavorite == true ? .yellow : .gray
+        
+        if let favorite = planet {
+            delegate?.favoritedPlanet(favorite)
+        }
     }
     
     private func goBackToPlanetsList() {
@@ -190,7 +209,7 @@ class PlanetDetailViewController: UIViewController {
             planetImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             planetImageView.heightAnchor.constraint(equalToConstant: 280),
             planetImageView.widthAnchor.constraint(equalToConstant: 280),
-            planetImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 200)
+            planetImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 150)
         ])
     }
 }

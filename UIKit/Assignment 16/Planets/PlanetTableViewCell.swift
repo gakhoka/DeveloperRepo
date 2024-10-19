@@ -15,10 +15,12 @@ class PlanetTableViewCell: UITableViewCell {
     var planetImage = UIImageView()
     var starButton = UIButton()
     var isFavorite = false
-    
+    var planet: Planet?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         contentView.backgroundColor = UIColor.hexColor
+        
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -37,17 +39,26 @@ class PlanetTableViewCell: UITableViewCell {
     
     private func starButtonConfig() {
         starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-        starButton.tintColor = .gray
         starButton.addAction(UIAction(handler: { [weak self] action in
             self?.starButtonAction()
         }), for: .touchUpInside)
     }
     
     private func starButtonAction() {
-        isFavorite.toggle()
-        starButton.tintColor = isFavorite ? .yellow : .gray
+        planet?.isFavorite.toggle()
+        starButton.tintColor = planet?.isFavorite ?? false ? .yellow : .gray
     }
     
+    func configureCell(planet: Planet) {
+        planetName.text = planet.name
+        planetArea.text = "\(planet.area.toDecimalString() ?? "") km2"
+        planetImage.image = UIImage(named: planet.name)
+        let disclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
+        disclosureIndicator.tintColor = UIColor.titleLabelColor
+        disclosureIndicator.frame = CGRect(x: 0, y: 0, width: 18, height: 18)
+        accessoryView = disclosureIndicator
+        starButton.tintColor = planet.isFavorite ? .yellow : .gray
+    }
     private func cellConfig() {
         contentView.addSubview(planetName)
         contentView.addSubview(planetArea)
