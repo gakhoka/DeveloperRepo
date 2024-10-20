@@ -211,6 +211,12 @@ class PlanetDetailViewController: UIViewController {
             planetImageView.widthAnchor.constraint(equalToConstant: 280),
             planetImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 150)
         ])
+        
+        let screenHeight = UIScreen.main.bounds.height
+        
+        if screenHeight < 800 {
+            planetImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        }
     }
 }
 
