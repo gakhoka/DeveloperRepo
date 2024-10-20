@@ -20,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7133A49A2CC5A53F00A6ACA8 /* .gitignore.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = .gitignore.md; sourceTree = "<group>"; };
 		7178D5C32CC19FA5003FAFF0 /* Planets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7178D5C62CC19FA5003FAFF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7178D5C82CC19FA5003FAFF0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +70,7 @@
 				7178D5CA2CC19FA5003FAFF0 /* PlanetViewController.swift */,
 				7178D5DC2CC1A49A003FAFF0 /* PlanetViewController-TableView.swift */,
 				7178D5E02CC1B68F003FAFF0 /* Extensions.swift */,
+				7133A49A2CC5A53F00A6ACA8 /* .gitignore.md */,
 				7178D5DE2CC1A690003FAFF0 /* PlanetTableViewCell.swift */,
 				7178D5DA2CC1A15D003FAFF0 /* PlanetModel.swift */,
 				7178D5E22CC1BEC3003FAFF0 /* PlanetDetailViewController.swift */,
