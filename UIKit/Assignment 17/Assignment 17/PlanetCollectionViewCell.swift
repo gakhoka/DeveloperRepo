@@ -7,30 +7,34 @@
 
 import UIKit
 
-class PlanetCollectionViewCell: UICollectionViewCell {
-    var planetName = UILabel()
-    var planetArea = UILabel()
-    var planetImage = UIImageView()
-    var starButton = UIButton()
-    var isFavorite = false
-    var planet: Planet?
+final class PlanetCollectionViewCell: UICollectionViewCell {
+    private var planetName = UILabel()
+    private var planetArea = UILabel()
+    private var planetImage = UIImageView()
+    private var starButton = UIButton()
+    private var planet: Planet?
     private var stackView = UIStackView()
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupUI()
+        starButtonConfig()
+        contentView.backgroundColor = .hexColor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupUI() {
         cellConfig()
-        starButtonConfig()
     }
-
-
+    
     private func starButtonConfig() {
         starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
         starButton.addAction(UIAction(handler: { [weak self] action in
             self?.starButtonAction()
+            print("tapped")
         }), for: .touchUpInside)
     }
     
@@ -40,6 +44,7 @@ class PlanetCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(planet: Planet) {
+        self.planet = planet
         planetName.text = planet.name
         planetArea.text = "\(planet.area.toDecimalString() ?? "") km2"
         planetImage.image = UIImage(named: planet.name)

@@ -27,8 +27,6 @@ extension PlanetViewController: UICollectionViewDataSource, UICollectionViewDele
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlanetCell", for: indexPath) as? PlanetCollectionViewCell {
             let planet = planets[indexPath.row]
             cell.configureCell(planet: planet)
-            cell.backgroundColor = .hexColor
-            cell.planet = planet
             return cell
         }
         return UICollectionViewCell()
@@ -39,6 +37,7 @@ extension PlanetViewController: PlanetDetailViewControllerDelegate {
     func favoritedPlanet(_ planet: Planet) {
         if let index = planets.firstIndex(where: { $0.name == planet.name }) {
             planets[index] = planet
+            planets.sort(by: { $0.isFavorite && !$1.isFavorite })
             planetsCollectionView.reloadData()
         }
     }

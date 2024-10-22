@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 
-class PlanetViewController: UIViewController {
+final class PlanetViewController: UIViewController {
     
     private var titleLabel = UILabel()
     
