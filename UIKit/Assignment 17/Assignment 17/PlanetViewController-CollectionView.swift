@@ -27,9 +27,20 @@ extension PlanetViewController: UICollectionViewDataSource, UICollectionViewDele
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlanetCell", for: indexPath) as? PlanetCollectionViewCell {
             let planet = planets[indexPath.row]
             cell.configureCell(planet: planet)
+            cell.delegate = self
             return cell
         }
         return UICollectionViewCell()
+    }
+}
+
+extension PlanetViewController: PlanetCollectionViewCellDelegate {
+    func updateCollectioView(_ planet: Planet) {
+        if let index = planets.firstIndex(where: { $0.name == planet.name }) {
+            planets[index] = planet
+            planets.sort(by: { $0.isFavorite && !$1.isFavorite })
+            planetsCollectionView.reloadData()
+        }
     }
 }
 
@@ -38,13 +49,6 @@ extension PlanetViewController: PlanetDetailViewControllerDelegate {
         if let index = planets.firstIndex(where: { $0.name == planet.name }) {
             planets[index] = planet
             planets.sort(by: { $0.isFavorite && !$1.isFavorite })
-            planetsCollectionView.reloadData()
-        }
-    }
-    
-    func favoriteTapped(for planet: Planet) {
-        if let index = planets.firstIndex(where: { $0.isFavorite == planet.isFavorite }) {
-            planets[index] = planet
             planetsCollectionView.reloadData()
         }
     }

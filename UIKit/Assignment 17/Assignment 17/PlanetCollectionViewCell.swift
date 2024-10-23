@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol PlanetCollectionViewCellDelegate: AnyObject {
+    func updateCollectioView(_ planet: Planet)
+}
+
 final class PlanetCollectionViewCell: UICollectionViewCell {
     private var planetName = UILabel()
     private var planetArea = UILabel()
@@ -14,6 +18,7 @@ final class PlanetCollectionViewCell: UICollectionViewCell {
     private var starButton = UIButton()
     private var planet: Planet?
     private var stackView = UIStackView()
+    weak var delegate: PlanetCollectionViewCellDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,6 +46,10 @@ final class PlanetCollectionViewCell: UICollectionViewCell {
     private func starButtonAction() {
         planet?.isFavorite.toggle()
         starButton.tintColor = planet?.isFavorite ?? false ? .yellow : .gray
+        
+        if let planet = planet {
+            delegate?.updateCollectioView(planet)
+        }
     }
     
     func configureCell(planet: Planet) {
