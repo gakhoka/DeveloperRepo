@@ -43,7 +43,6 @@ final class PlanetViewController: UIViewController {
         titleLabelConfig()
     }
     
-    
     private func titleLabelConfig() {
         view.addSubview(titleLabel)
         titleLabel.textColor = .titleLabelColor
