@@ -14,7 +14,7 @@ class NetworkService {
         if let url = URL(string: urlString) {
             let urlRequest = URLRequest(url: url)
             
-            URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            URLSession.shared.dataTask(with: urlRequest) { [weak self] data, response, error in
                 
                 if let error {
                     print(error)
