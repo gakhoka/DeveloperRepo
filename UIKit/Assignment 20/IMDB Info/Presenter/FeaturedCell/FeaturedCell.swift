@@ -17,11 +17,12 @@ final class FeaturedCell: UITableViewCell {
     @IBOutlet private var movieScore: UILabel!
     @IBOutlet private weak var genresLabel: UILabel!
     @IBOutlet var scoreStars: [UIImageView]!
+    var newsChanged: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        GenreManager.fetchGenreList(with: genreListUrl) { genreList in
-            self.genreList = genreList.genres
+        GenreManager.fetchGenreList(with: genreListUrl) {[weak self] genreList in
+            self?.genreList = genreList.genres
         }
         
         self.showAnimatedGradientSkeleton()
@@ -55,6 +56,9 @@ final class FeaturedCell: UITableViewCell {
             }
             scoreStars[Int(movie.score/2)].image = UIImage.init(systemName: "star.leadinghalf.filled")
         }
-        movieScore.text = "\(String(movie.score))"
+        
+        genresLabel.textColor = .white
+        movieScore.text = String(format: "%.1f", movie.score)
+        movieScore.textColor = .white
     }
 }

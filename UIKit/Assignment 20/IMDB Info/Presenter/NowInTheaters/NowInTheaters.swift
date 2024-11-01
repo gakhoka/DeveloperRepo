@@ -16,16 +16,16 @@ final class NowInTheaters: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        movieManager.fetchMovieList(with: nowInTheaters) { movielist in
-            self.movies = movielist.results
+        movieManager.fetchMovieList(with: nowInTheaters) { [weak self] movielist in
+            self?.movies = movielist.results
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                self?.tableView.reloadData()
             }
         }
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "MovieCollectionVie", bundle: nil), forCellReuseIdentifier: "MovieCollectionView")
+        tableView.register(UINib(nibName: "MovieCollectionView", bundle: nil), forCellReuseIdentifier: "MovieCollectionView")
         tableView.register(UINib(nibName: "FeaturedCell", bundle: nil), forCellReuseIdentifier: "FeaturedCell")
         tableView.register(UINib(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "MovieCell")
     }
@@ -34,6 +34,14 @@ final class NowInTheaters: UIViewController {
 extension NowInTheaters: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         movies.count/10
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 650
+        } else {
+            return 540
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
