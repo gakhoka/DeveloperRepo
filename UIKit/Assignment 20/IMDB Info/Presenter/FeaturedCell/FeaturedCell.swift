@@ -17,7 +17,6 @@ final class FeaturedCell: UITableViewCell {
     @IBOutlet private var movieScore: UILabel!
     @IBOutlet private weak var genresLabel: UILabel!
     @IBOutlet var scoreStars: [UIImageView]!
-    var newsChanged: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
