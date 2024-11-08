@@ -18,6 +18,7 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource, R
         detailVC.configureWith(selectedQuestion, index: indexPath.row)
         navigationController?.pushViewController(detailVC, animated: true)
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.quizCount
     }
