@@ -37,8 +37,8 @@ final class ImageViewModel {
         for url in imageUrls {
             disptachGroup.enter()
             networkManager.downloadImage(from: url ) { [weak self] image in
-                guard let image = image else { return }
-                self?.imageProcessor.applyFilter(to: image, completion: {  processedImage in
+                guard let image else { return }
+                self?.imageProcessor.applyFilter(to: image, completion: { [weak self] processedImage in
                     temporaryImages.append(processedImage)
                     disptachGroup.leave()
                     
@@ -62,8 +62,8 @@ final class ImageViewModel {
         for url in imageUrls {
             let operation = BlockOperation { [weak self] in
                 let semaphore = DispatchSemaphore(value: 0)
-                self?.fetchAndProcessImage(from: url, completion: {  image in
-                    guard let image = image else { return }
+                self?.fetchAndProcessImage(from: url, completion: { [weak self] image in
+                    guard let image else { return }
                     temporaryImages.append(image)
                     semaphore.signal()
                 })
