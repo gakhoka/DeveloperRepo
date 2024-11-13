@@ -1,0 +1,15 @@
+{
+  "originHash" : "2cd03efe526b4a8314a5c48d8d3eca91d1db6aedac886a7e1471311b8767d1c9",
+  "pins" : [
+    {
+      "identity" : "networking",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gakhoka/Networking.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "06355720758fdd48e51f135d65e33085f7be396a"
+      }
+    }
+  ],
+  "version" : 3
+}
