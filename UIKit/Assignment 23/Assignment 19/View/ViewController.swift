@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import NetworkService
 
 class NewsViewController: UIViewController {
     
     private let tableView = UITableView()
     private let homePageTitle = UILabel()
-    let viewModel = LatestNewViewModel()
+    let viewModel = LatestNewViewModel(networkService: NetworkService())
     
     override func viewDidLoad() {
         super.viewDidLoad()

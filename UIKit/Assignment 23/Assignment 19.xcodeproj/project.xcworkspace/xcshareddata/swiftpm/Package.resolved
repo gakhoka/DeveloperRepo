@@ -1,5 +1,5 @@
 {
-  "originHash" : "966dc8d19d2f7e27c8a167d7def9afd51eb30bd772afb5fed4333909e1157116",
+  "originHash" : "2cd03efe526b4a8314a5c48d8d3eca91d1db6aedac886a7e1471311b8767d1c9",
   "pins" : [
     {
       "identity" : "networking",
@@ -7,7 +7,7 @@
       "location" : "https://github.com/gakhoka/Networking.git",
       "state" : {
         "branch" : "main",
-        "revision" : "6a0d4e67e04ad1813342b3f4347a69457aa37b21"
+        "revision" : "06355720758fdd48e51f135d65e33085f7be396a"
       }
     }
   ],
