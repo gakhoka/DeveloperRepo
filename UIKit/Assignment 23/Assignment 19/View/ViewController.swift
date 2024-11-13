@@ -12,7 +12,7 @@ class NewsViewController: UIViewController {
     
     private let tableView = UITableView()
     private let homePageTitle = UILabel()
-    let viewModel = LatestNewViewModel(networkService: NetworkService())
+    let viewModel = LatestNewViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()

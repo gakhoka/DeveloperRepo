@@ -27,7 +27,7 @@ class LatestNewViewModel {
     
     var newsChanged: (() -> Void)?
     
-    init(networkService: NetworkServiceProtocol) {
+    init(networkService: NetworkServiceProtocol = NetworkService()) {
         self.networkService = networkService
         fetchNewsData(page: currentPage)
     }
