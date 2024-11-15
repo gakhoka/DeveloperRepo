@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     private var viewModel = GameViewModel()
     private let animation = Animations()
     let curryImageView = UIImageView()
@@ -119,7 +119,7 @@ class ViewController: UIViewController {
     }
     
     private func showGameOverAlert() {
-        let ac = UIAlertController(title: "Game Over", message: "🏆", preferredStyle: .alert)
+        let ac = UIAlertController(title: "Curry for three, baaang", message: "🏆", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Play again", style: .default, handler: { [weak self] action in
             self?.restartGame()
         }))
@@ -127,8 +127,8 @@ class ViewController: UIViewController {
     }
     
     private func restartGame() {
+        viewModel.restart()
         viewModel.resetBallPosition(viewWidth: view.frame.width, basketballViewWidth: basketballView.frame.width)
-        viewModel.startBallFall()
     }
     
       private func updateCharacterFrame() {

@@ -1,10 +1,9 @@
 import UIKit
 
-class GameViewModel {
+final class GameViewModel {
     
     private var gameModel = GameModel()
     private var displayLink: CADisplayLink?
-    //es
     
     var scoreUpdated: ((Int) -> Void)?
     var gameOver: (() -> Void)?
@@ -21,14 +20,11 @@ class GameViewModel {
     func startBallFall() {
         displayLink = CADisplayLink(target: self, selector: #selector(updateBallPosition))
         displayLink?.add(to: .main, forMode: .common)
-        
     }
-    
 
     @objc func updateBallPosition() {
         guard gameModel.score < 20 else { return }
 
-    
         gameModel.ballPosition.y += gameModel.ballSpeed
         ballPositionUpdated?(gameModel.ballPosition)
         checkForCollision(characterFrame: characterFrame)
@@ -55,12 +51,15 @@ class GameViewModel {
         }
     }
     
+    func restart() {
+        gameModel.ballSpeed = 5
+        gameModel.score = -1
+        updateBallPosition()
+        startBallFall()
+    }
+    
     func stopBallFall() {
         displayLink?.invalidate()
         displayLink = nil
-    }
-
-    func resumeBallFall() {
-        startBallFall()
     }
 }
