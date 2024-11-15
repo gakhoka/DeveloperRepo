@@ -8,10 +8,10 @@
 import UIKit
 import Foundation
 
-class Animations {
+final class Animations {
     var animator = UIViewPropertyAnimator()
     
-     func animateMVPlabel(label: UILabel) {
+     func animateMVPlabel(_ label: UILabel) {
         UIView.animate(withDuration: 2, delay: 2,options: [.repeat, .autoreverse], animations: {
             label.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
         })
@@ -30,6 +30,4 @@ class Animations {
         }
         animator.startAnimation()
     }
-    
-    
 }

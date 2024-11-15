@@ -1,6 +1,11 @@
+
+
+
 import UIKit
+import SwiftUI
 
 final class ViewController: UIViewController {
+    
     private var viewModel = GameViewModel()
     private let animation = Animations()
     let curryImageView = UIImageView()
@@ -9,24 +14,27 @@ final class ViewController: UIViewController {
     private var startButton = UIButton()
     var isDragging = false
     private var mvpLabel = UILabel()
+    private var newGameButton = UIButton()
+    private var newGameLabel = UILabel()
+    private var newGame = false
     
-  
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         startButtonConfig()
-        bindViewModel()
+        viewModelUpdates()
     }
+    
     private func setupUI() {
         basketballViewConfig()
         scoreLabelConfig()
         imageViewConfig()
         startButton.setTitle("", for: .normal)
         mvpLabelConfig()
+        newGameButtonConfig()
     }
     
     private func basketballViewConfig() {
-        
         view.addSubview(basketballView)
         basketballView.translatesAutoresizingMaskIntoConstraints = false
         basketballView.image = UIImage(named: "ball")
@@ -38,6 +46,7 @@ final class ViewController: UIViewController {
         ])
         animation.loadBall(basketballView)
     }
+    
     private func imageViewConfig() {
         view.addSubview(curryImageView)
         curryImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -61,7 +70,24 @@ final class ViewController: UIViewController {
             scoreLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scoreLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10)
         ])
+    }
+    
+    private func newGameButtonConfig() {
+        view.addSubview(newGameButton)
+        newGameButton.translatesAutoresizingMaskIntoConstraints = false
+        newGameButton.setTitle("New game", for: .normal)
+        newGameButton.setTitleColor(.black, for: .normal)
         
+        NSLayoutConstraint.activate([
+            newGameButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            newGameButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            newGameButton.heightAnchor.constraint(equalToConstant: 30),
+            newGameButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 50)
+        ])
+        
+        newGameButton.addAction(UIAction(handler: { [weak self] action in
+            self?.viewModel.restart()
+        }), for: .touchUpInside)
     }
     
     private func mvpLabelConfig() {
@@ -77,7 +103,7 @@ final class ViewController: UIViewController {
             mvpLabel.heightAnchor.constraint(equalToConstant: 50),
             mvpLabel.widthAnchor.constraint(equalToConstant: 300)
         ])
-        animation.animateMVPlabel(label: mvpLabel)
+        animation.animateMVPlabel(mvpLabel)
     }
     
     private func startButtonConfig() {
@@ -101,10 +127,9 @@ final class ViewController: UIViewController {
     private func startGame() {
         viewModel.resetBallPosition(viewWidth: view.frame.width, basketballViewWidth: basketballView.frame.width)
         viewModel.startBallFall()
-    
     }
     
-    private func bindViewModel() {
+    private func viewModelUpdates() {
         viewModel.scoreUpdated = { [weak self] score in
             self?.scoreLabel.text = "Score: \(score)"
         }
@@ -138,5 +163,26 @@ final class ViewController: UIViewController {
       override func viewDidLayoutSubviews() {
           super.viewDidLayoutSubviews()
           updateCharacterFrame()
+          basketballView.translatesAutoresizingMaskIntoConstraints = true
       }
+}
+
+struct viewControllerRepresentable: UIViewControllerRepresentable {
+    
+    typealias UIViewControllerType = ViewController
+    
+    
+    func makeUIViewController(context: Context) -> ViewController {
+        ViewController()
+    }
+    
+    func updateUIViewController(_ uiViewController: ViewController, context: Context) {
+        
+    }
+}
+
+struct viewController_Previews: PreviewProvider {
+    static var previews: some View {
+        viewControllerRepresentable()
+    }
 }

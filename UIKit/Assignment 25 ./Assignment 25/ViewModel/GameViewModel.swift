@@ -1,3 +1,5 @@
+
+
 import UIKit
 
 final class GameViewModel {
@@ -52,10 +54,12 @@ final class GameViewModel {
     }
     
     func restart() {
-        gameModel.ballSpeed = 5
-        gameModel.score = -1
-        updateBallPosition()
-        startBallFall()
+        stopBallFall()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.gameModel.ballSpeed = 5
+            self?.gameModel.score = 0
+            self?.startBallFall()
+        }
     }
     
     func stopBallFall() {
