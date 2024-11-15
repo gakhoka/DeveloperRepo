@@ -19,7 +19,7 @@ final class Animations {
     
      func loadBall(_ myView: UIView) {
         animator = UIViewPropertyAnimator(duration: 3, dampingRatio: 0.4) {
-            myView.frame = CGRect(x: 50, y: 200, width: 150, height: 150)
+            myView.frame = CGRect(x: myView.frame.midX, y: 100, width: 50, height: 150)
         }
         animator.startAnimation()
     }
