@@ -3,7 +3,12 @@
 
 import Foundation
 
-class MockJSON {
+protocol NetworkService {
+    
+    func fetchUsers(withLimit limit: Int, completionHandler: @escaping ([User]) -> Void)
+}
+
+class MockJSON: NetworkService {
     
     var users: [User] = []
     var isErrorThrown = false
