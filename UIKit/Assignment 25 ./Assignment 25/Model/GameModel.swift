@@ -1,7 +1,7 @@
 import UIKit
 
 
-final class GameModel {
+struct GameModel {
     var score: Int = 0
     var ballPosition: CGPoint = .zero
     var ballSpeed: CGFloat = 5.0
