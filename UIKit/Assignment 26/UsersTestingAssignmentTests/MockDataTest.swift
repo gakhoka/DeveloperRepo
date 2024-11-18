@@ -25,7 +25,19 @@ class MockDataTest: XCTestCase {
     }
     
     func testUserNotEmpty() {
-        XCTAssertNotNil(mockJSON.users.isEmpty)
+        XCTAssertNotNil(mockJSON.users)
+    }
+    
+    func testUsersAreCorrectlyDecoded() {
+        XCTAssertGreaterThan(mockJSON.users.count, 0, "Expected at least 1 user to be decoded.")
+    }
+    
+    func testFetchUsersWithEmptyResponse() {
+        mockJSON.users = []
+        
+        mockJSON.fetchUsers(withLimit: 1) { users in
+            XCTAssertEqual(users.count, 0, "Expected 0 users when the response is empty.")
+        }
     }
     
     func testFetchUsersSuccess() {
