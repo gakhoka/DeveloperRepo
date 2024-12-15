@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
 
     @StateObject var viewModel = TimerViewModel()
+    @State private var showingSheet = false
     
     var body: some View {
         NavigationView {
@@ -20,6 +21,8 @@ struct ContentView: View {
                         Text("ტაიმერები")
                             .foregroundStyle(.white)
                             .fontAppearance(size: 24)
+                        Spacer()
+                        addButton
                     }
                     .frame(maxWidth: .infinity,maxHeight: 120, alignment: .leading)
                     .padding()
@@ -42,7 +45,19 @@ struct ContentView: View {
             .background(.black)
             .ignoresSafeArea()
         }
+        .sheet(isPresented: $showingSheet) {
+            DefaultTimers(viewModel: viewModel)
+        }
+        
+    }
     
+    private var addButton: some View {
+        Button("", systemImage: "plus") {
+            showingSheet = true
+        }
+        .frame(width: 32, height: 32)
+        .foregroundColor(.white)
+        .imageScale(.large)
     }
 }
 
