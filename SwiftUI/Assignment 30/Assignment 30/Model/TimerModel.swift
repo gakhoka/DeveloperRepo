@@ -8,7 +8,13 @@
 import Foundation
 
 struct TimerModel: Codable {
+    var id = UUID()
     let name: String
     let totalTimeInSeconds: Int
     let remainingTime: Int
+}
+
+struct TimerActivity: Codable {
+    var date: Date
+    var timeWorked: TimeInterval
 }
