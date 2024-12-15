@@ -42,13 +42,13 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity)
                 }
             }
-            .background(.black)
+            .background(showingSheet ? .gray : .black)
+            .opacity(showingSheet ? 0.5 : 1)
             .ignoresSafeArea()
         }
         .sheet(isPresented: $showingSheet) {
-            DefaultTimers(viewModel: viewModel)
+            DefaultTimers(showingSheet: $showingSheet, viewModel: viewModel)
         }
-        
     }
     
     private var addButton: some View {

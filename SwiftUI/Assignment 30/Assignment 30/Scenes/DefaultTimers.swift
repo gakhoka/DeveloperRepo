@@ -8,21 +8,12 @@
 import SwiftUI
 
 struct DefaultTimers: View {
+    @Binding var showingSheet: Bool
+    
     @ObservedObject var viewModel: TimerViewModel
-    let defaultTimers: [(String, Int)] = [
-        ("ჩაის დაყენება", 3 * 60),
-        ("HIIT ვარჯიში", 7 * 60),
-        ("კვერცხის მოხარშვა", 10 * 60),
-        ("შესვენება", 15 * 60),
-        ("ყავის პაუზა", 20 * 60),
-        ("პომოდორო", 25 * 60),
-        ("მედიტაცია", 30 * 60),
-        ("ვარჯიში", 45 * 60),
-        ("სამუშაო სესია", 60 * 60),
-    ]
     
     let gridItem = Array(repeating: GridItem(.flexible()), count: 3)
- 
+    
     var body: some View {
         if #available(iOS 16.0, *) {
             ZStack {
@@ -35,42 +26,54 @@ struct DefaultTimers: View {
                             .padding()
                         Spacer()
                     }
-                    LazyVGrid(columns: gridItem) {
-                        ForEach(defaultTimers, id: \.0) { timer in
-                            Button {
-                                viewModel.createTimer(name: timer.0, hours: 0, minutes: timer.1 / 60, seconds: timer.1 % 60)
-                            }  label: {
-                                VStack(alignment: .center) {
-                                    Text(String(format: "%02d:%02d", timer.1 / 60, timer.1 % 60))
-                                        .foregroundColor(.blue)
-                                        .font(.system(size: 20, weight: .medium))
-
-                                    Spacer(minLength: 10)
-                                    
-                                    Text(timer.0)
-                                        .foregroundColor(.white)
-                                    
+                    ScrollView {
+                        LazyVGrid(columns: gridItem) {
+                            ForEach(viewModel.defaultTimers, id: \.0) { timer in
+                                Button {
+                                    viewModel.createTimer(name: timer.0, hours: 0, minutes: timer.1 / 60, seconds: timer.1 % 60)
+                                    showingSheet = false
+                                }  label: {
+                                    VStack(alignment: .center) {
+                                        Text(formatTime(seconds: timer.1))
+                                            .foregroundColor(.blue)
+                                            .font(.system(size: 20))
+                                        
+                                        Spacer(minLength: 10)
+                                        
+                                        Text(timer.0)
+                                            .foregroundColor(.white)
+                                        
+                                    }
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.customGray)
+                                    .cornerRadius(10)
                                 }
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.customGray)
-                                .cornerRadius(10)
                             }
+                            .frame(minWidth: 130, minHeight: 100)
+                            .padding(2)
+                            .background(Color.customGray.ignoresSafeArea())
                         }
-                        .frame(minWidth: 130, minHeight: 100)
-                        .padding(2)
-                        .background(Color.customGray.ignoresSafeArea())
+                        
+                        .background(Color.black)
+                        .presentationDetents([.height(390)])
                     }
-                    
-                    .background(Color.black)
-                    .presentationDetents([.height(390)])
                 }
             }
             .background(Color.black)
         }
     }
+    
+    func formatTime(seconds: Int) -> String {
+        let hours = seconds / 3600
+        let minutes = (seconds % 3600) / 60
+        let seconds = seconds % 60
+        
+        // Return the formatted string
+        return String(format: hours > 0 ? "%02d:%02d:%02d" : "%02d:%02d", hours, minutes, seconds)
+    }
 }
 
-#Preview {
-    DefaultTimers(viewModel: TimerViewModel())
-}
+//#Preview {
+//    DefaultTimers(showingSheet: $true, viewModel: TimerViewModel())
+//}

@@ -13,6 +13,7 @@ final class TimerViewModel: ObservableObject {
     @Published var isRunning = false
     @Published var timer: Timer?
     @Published var activities: [TimerActivity] = []
+    @Published var defaultTimers = DefaultTimersModel.defaultTimers
   
     private var totalTimeInSeconds: Int = 0
     private var remainingTime: Int = 0
