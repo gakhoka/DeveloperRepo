@@ -14,12 +14,37 @@ final class TimerViewModel: ObservableObject {
     @Published var timer: Timer?
     @Published var activities: [TimerActivity] = []
     @Published var defaultTimers = DefaultTimersModel.defaultTimers
-  
-    private var totalTimeInSeconds: Int = 0
-    private var remainingTime: Int = 0
+    
+    private var isPaused = false
+    private var totalTimeInSeconds = 0
+    private var remainingTime = 0
     
     var totalTimeWorked: TimeInterval {
-        return activities.reduce(0) { $0 + $1.timeWorked }
+        activities.reduce(0) { $0 + $1.timeWorked }
+    }
+    
+    var sessionCount: Int {
+        activities.reduce(0) { $0 + $1.sessionCount }
+    }
+    
+    var timerActivitiesByDate: [Date: [TimerActivity]] {
+            Dictionary(grouping: activities, by: { Calendar.current.startOfDay(for: $0.date) })
+        }
+    
+    var averageTimeWorked: TimeInterval {
+        guard  sessionCount > 0 else { return 0 }
+        return totalTimeWorked / Double(sessionCount)
+    }
+ 
+    var timerActivities: [(title: String, value: String)] {
+        let totalTimeString = totalTimeWorked.formatTimeInterval()
+        let averageTimeString = activities.isEmpty ? "00:00:00" : averageTimeWorked.formatTimeInterval()
+
+        return [
+            (title: "დღევანდელი სესიები", value: "\(sessionCount) სესია"),
+            (title: "საშუალო ხანგრძლივობა", value: averageTimeString),
+            (title: "ჯამური დრო", value: totalTimeString)
+        ]
     }
     
     func removeTimer(at index: Int) {
@@ -29,11 +54,20 @@ final class TimerViewModel: ObservableObject {
 
     func timerActivity() {
         let date = Calendar.current.startOfDay(for: Date())
+        let currentHour = Calendar.current.component(.hour, from: Date())
+        let currentMinute = Calendar.current.component(.minute, from: Date())
+        
+        let formattedTime = String(format: "%02d:%02d", currentHour, currentMinute)
         
         if let index = activities.firstIndex(where: { $0.date == date }) {
             activities[index].timeWorked += 1
+            if isPaused {
+                activities[index].sessionCount += 1
+                isPaused = false
+            }
         } else {
-            activities.append(TimerActivity(date: date, timeWorked: 1))
+            activities.append(TimerActivity(sessionCount: 1, date: date, startHour: formattedTime, timeWorked: 1))
+            isPaused = false
         }
     }
     
@@ -59,6 +93,7 @@ final class TimerViewModel: ObservableObject {
 
     func pauseTimer() {
         isRunning = false
+        isPaused = true
         timer?.invalidate()
         timer = nil
     }
@@ -66,6 +101,7 @@ final class TimerViewModel: ObservableObject {
     func resetTimer() {
         isRunning = false
         timer?.invalidate()
+        isPaused = false
         timer = nil
         remainingTime = totalTimeInSeconds
         updateTimeString()

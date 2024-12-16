@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 16.0, *)
 struct ContentView: View {
 
     @StateObject var viewModel = TimerViewModel()
@@ -42,7 +43,7 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity)
                 }
             }
-            .background(showingSheet ? .gray : .black)
+            .background(.black)
             .opacity(showingSheet ? 0.5 : 1)
             .ignoresSafeArea()
         }
@@ -62,5 +63,9 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    if #available(iOS 16.0, *) {
+        ContentView()
+    } else {
+        // Fallback on earlier versions
+    }
 }

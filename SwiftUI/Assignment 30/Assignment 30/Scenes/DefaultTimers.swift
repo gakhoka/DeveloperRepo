@@ -68,8 +68,7 @@ struct DefaultTimers: View {
         let hours = seconds / 3600
         let minutes = (seconds % 3600) / 60
         let seconds = seconds % 60
-        
-        // Return the formatted string
+
         return String(format: hours > 0 ? "%02d:%02d:%02d" : "%02d:%02d", hours, minutes, seconds)
     }
 }

@@ -23,3 +23,9 @@ extension TimeInterval {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 }
+
+extension Int {
+    func toTimeInterval() -> TimeInterval {
+        return TimeInterval(self * 3600)
+    }
+}
