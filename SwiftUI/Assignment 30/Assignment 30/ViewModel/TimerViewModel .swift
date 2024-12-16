@@ -29,7 +29,7 @@ final class TimerViewModel: ObservableObject {
     
     var timerActivitiesByDate: [Date: [TimerActivity]] {
             Dictionary(grouping: activities, by: { Calendar.current.startOfDay(for: $0.date) })
-        }
+    }
     
     var averageTimeWorked: TimeInterval {
         guard  sessionCount > 0 else { return 0 }
@@ -42,8 +42,8 @@ final class TimerViewModel: ObservableObject {
 
         return [
             (title: "დღევანდელი სესიები", value: "\(sessionCount) სესია"),
-            (title: "საშუალო ხანგრძლივობა", value: averageTimeString),
-            (title: "ჯამური დრო", value: totalTimeString)
+            (title: "საშუალო ხანგრძლივობა", value: averageTimeString.dateFormatter()),
+            (title: "ჯამური დრო", value: totalTimeString.dateFormatter())
         ]
     }
     

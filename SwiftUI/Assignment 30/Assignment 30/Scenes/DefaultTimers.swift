@@ -12,7 +12,7 @@ struct DefaultTimers: View {
     
     @ObservedObject var viewModel: TimerViewModel
     
-    let gridItem = Array(repeating: GridItem(.flexible()), count: 3)
+    private let gridItem = Array(repeating: GridItem(.flexible()), count: 3)
     
     var body: some View {
         if #available(iOS 16.0, *) {
@@ -27,7 +27,7 @@ struct DefaultTimers: View {
                         Spacer()
                     }
                     ScrollView {
-                        LazyVGrid(columns: gridItem) {
+                        LazyVGrid(columns: gridItem, spacing: 10) {
                             ForEach(viewModel.defaultTimers, id: \.0) { timer in
                                 Button {
                                     viewModel.createTimer(name: timer.0, hours: 0, minutes: timer.1 / 60, seconds: timer.1 % 60)
@@ -42,19 +42,17 @@ struct DefaultTimers: View {
                                         
                                         Text(timer.0)
                                             .foregroundColor(.white)
-                                        
                                     }
-                                    .padding()
+                                    .padding(10)
                                     .frame(maxWidth: .infinity)
                                     .background(Color.customGray)
                                     .cornerRadius(10)
+                                    
                                 }
                             }
-                            .frame(minWidth: 130, minHeight: 100)
-                            .padding(2)
+                            .frame(width: 125, height: 100)
                             .background(Color.customGray.ignoresSafeArea())
                         }
-                        
                         .background(Color.black)
                         .presentationDetents([.height(390)])
                     }
@@ -73,6 +71,7 @@ struct DefaultTimers: View {
     }
 }
 
-//#Preview {
-//    DefaultTimers(showingSheet: $true, viewModel: TimerViewModel())
-//}
+#Preview {
+    @State var isShowingSheet = false
+    DefaultTimers(showingSheet: $isShowingSheet , viewModel: TimerViewModel())
+}
