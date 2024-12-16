@@ -87,9 +87,9 @@ struct TimerDetailView: View {
     private var timerName: some View {
         Text(name)
             .fontAppearance(size: 24)
-            .frame(maxWidth: .infinity,maxHeight: 120)
+            .frame(width: 400, height: 120)
             .background(Color.customGray)
-            .padding(.top)
+            .padding(.top, 60)
     }
     
     private var gradient: some View {
