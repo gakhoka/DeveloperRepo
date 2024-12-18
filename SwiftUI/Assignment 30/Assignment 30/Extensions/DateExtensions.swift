@@ -23,3 +23,35 @@ extension TimeInterval {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 }
+
+extension Int {
+    func toTimeInterval() -> TimeInterval {
+        return TimeInterval(self * 3600)
+    }
+}
+
+extension String {
+    func dateFormatter() -> String {
+        let components = self.split(separator: ":").map { Int($0) ?? 0 }
+        var result = ""
+        
+        if components.count == 3 {
+            let hours = components[0]
+            let minutes = components[1]
+            let seconds = components[2]
+            
+            if hours > 0 {
+                result += "\(hours)h "
+            }
+            if minutes > 0 {
+                result += "\(minutes)m "
+            }
+            if seconds > 0 || result.isEmpty {
+                result += "\(seconds)s"
+            }
+        }
+        
+        return result.trimmingCharacters(in: .whitespaces)
+    }
+}
+

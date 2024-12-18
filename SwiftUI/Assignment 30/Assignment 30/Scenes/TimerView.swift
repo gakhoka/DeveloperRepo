@@ -30,7 +30,6 @@ struct TimerView: View {
             }
             .padding([.horizontal, .bottom])
             
-            
             Text(viewModel.timeString)
                 .font(.largeTitle)
                 .foregroundStyle(.blue)

@@ -15,6 +15,8 @@ struct TimerModel: Codable {
 }
 
 struct TimerActivity: Codable {
+    var sessionCount: Int
     var date: Date
+    var startHour: String
     var timeWorked: TimeInterval
 }

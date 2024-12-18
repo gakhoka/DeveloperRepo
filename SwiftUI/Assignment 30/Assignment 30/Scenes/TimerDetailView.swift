@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 16.0, *)
 struct TimerDetailView: View {
     
     let name: String
@@ -19,50 +20,35 @@ struct TimerDetailView: View {
             gradient
             VStack {
                 timerName
-                VStack(spacing: 22) {
+                VStack(spacing: 10) {
                     clockImage
                     Text("ხანგრძლივობა")
                     timerDuration
                 }
-                .roundedRectangleStyle(width: 357, height: 306)
-                ScrollView {
-                    VStack {
-                        HStack {
-                            Text("აქტივობის ისტორია")
-                                .fontAppearance(size: 24)
-                            Spacer()
-                        }
-                        .padding(.leading, 30)
-                        .padding()
-                        
-                        Divider()
-                            .frame(width: 357, height: 2)
-                            .background(.white)
-                            .padding(.bottom)
-                        
-                        VStack {
-                            HStack(spacing: 200) {
-                                Text("თარიღი")
-                                Text("დრო")
-                            }
-                            .padding(.bottom)
-                            HStack(spacing: 150) {
-                                ForEach(viewModel.activities, id: \.date) { activity in
-                                    VStack {
-                                        Text(activity.date.formatDate())
-                                    }
-                                    VStack {
-                                        Text(activity.timeWorked.formatTimeInterval())
-                                    }
-                                }
-                            }
-                        }
+                .roundedRectangleStyle(width: 357, height: 160)
+                .padding(.top, 5)
+                
+                ActivityListView(viewModel: viewModel)
+                    .roundedRectangleStyle(width: 357, height: 180)
+                
+                
+                VStack(spacing: 10) {
+                    HStack {
+                        Text("აქტივობის ისტორია")
+                            .font(.system(size: 20, weight: .medium))
+                            .foregroundColor(.white)
+                            .padding(.leading, 35)
+                            .padding(.top, 20)
                         Spacer()
                     }
+ 
+                    ActivityHistoryView(viewModel: viewModel)
+                    .scrollContentBackground(.hidden)
+                    .frame(width: 400, height: 383)
+                  
                 }
-                .roundedRectangleStyle(width: 360, height: 383)
+                .background(Color.clear.edgesIgnoringSafeArea(.all))
             }
-            
             .foregroundStyle(.white)
         }
         .ignoresSafeArea(.all)
@@ -101,9 +87,9 @@ struct TimerDetailView: View {
     private var timerName: some View {
         Text(name)
             .fontAppearance(size: 24)
-            .frame(maxWidth: .infinity,maxHeight: 120)
+            .frame(width: 400, height: 120)
             .background(Color.customGray)
-            .padding(.top)
+            .padding(.top, 60)
     }
     
     private var gradient: some View {
@@ -112,5 +98,7 @@ struct TimerDetailView: View {
 }
 
 #Preview {
-    TimerDetailView(name: "name", viewModel: TimerViewModel(), totalTimeWorked: TimeInterval())
+    if #available(iOS 16.0, *) {
+        TimerDetailView(name: "name", viewModel: TimerViewModel(), totalTimeWorked: TimeInterval())
+    }
 }
