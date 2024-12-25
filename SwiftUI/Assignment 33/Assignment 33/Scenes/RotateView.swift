@@ -39,7 +39,7 @@ struct RotateView: View {
                                 zoomAmount = value.magnification
                             }
                             .onEnded { value in
-                                finalZoomAmount += zoomAmount
+                                finalZoomAmount *= zoomAmount
                                 zoomAmount = 0.0
                             }
                     )
